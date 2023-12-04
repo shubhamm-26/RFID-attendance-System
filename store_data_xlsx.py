@@ -14,7 +14,7 @@ def update_excel(user_id, current_time, student_id, name, phone, room):
     try:
         # Check if the Excel file exists, create an empty DataFrame if it doesn't
         if not os.path.exists(excel_file_path):
-            df = pd.DataFrame(columns=['User_ID', 'Student_ID', 'Name', 'Phone No.', 'Room No.', 'InTime', 'OutTime'])
+            df = pd.DataFrame(columns=['User_ID', 'Student_ID', 'Name', 'Phone No.', 'Room No.', 'OutTime', 'InTime'])
         else:
             # Read existing data
             df = pd.read_excel(excel_file_path)
