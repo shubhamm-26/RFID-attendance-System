@@ -26,8 +26,8 @@ def update_csv(user_id, current_time, student_id, name, phone, room):
             user_index = df.index[df['User_ID'] == user_id].max()
 
             if pd.isnull(df.at[user_index, 'InTime']):
-                # OutTime is empty, update OutTime
-                df.at[user_index, 'InTime'] = current_time
+                # OutTime is empty, update OutTime using loc
+                df.loc[user_index, 'InTime'] = current_time
             else:
                 # Both InTime and OutTime are present, add a new entry
                 new_entry = {'User_ID': user_id, 'Student_ID': student_id, 'Name': name, 'Phone No.': phone,
