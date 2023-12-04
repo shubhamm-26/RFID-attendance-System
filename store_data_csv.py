@@ -13,7 +13,7 @@ def update_csv(user_id, current_time, student_id, name, phone, room):
     try:
         # Check if the CSV file exists, create an empty DataFrame if it doesn't
         if not os.path.exists(csv_file_path):
-            df = pd.DataFrame(columns=['User_ID', 'Student_ID', 'Name', 'Phone No.', 'Room No.', 'InTime', 'OutTime'])
+            df = pd.DataFrame(columns=['User_ID', 'Student_ID', 'Name', 'Phone No.', 'Room No.', 'OutTime', 'InTime'])
         else:
             # Read existing data
             df = pd.read_csv(csv_file_path)
