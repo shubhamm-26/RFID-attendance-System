@@ -1,4 +1,3 @@
-# Import necessary libraries
 import os
 import serial
 import pandas as pd
@@ -27,17 +26,17 @@ def update_excel(user_id, current_time, student_id, name, phone, room):
             user_index = df.index[df['User_ID'] == user_id].max()
 
             if pd.isnull(df.at[user_index, 'InTime']):
-                # OutTime is empty, update OutTime
-                df.at[user_index, 'InTime'] = current_time
+                # OutTime is empty, update OutTime using loc
+                df.loc[user_index, 'InTime'] = pd.to_datetime(current_time)  # Explicitly cast to datetime64
             else:
                 # Both InTime and OutTime are present, add a new entry
                 new_entry = {'User_ID': user_id, 'Student_ID': student_id, 'Name': name, 'Phone No.': phone,
-                             'Room No.': room, 'OutTime': current_time, 'InTime': None}
+                             'Room No.': room, 'OutTime': pd.to_datetime(current_time), 'InTime': None}  # Explicitly cast to datetime64
                 df = pd.concat([df, pd.DataFrame([new_entry])], ignore_index=True)
         else:
             # User doesn't exist, add a new entry
             new_entry = {'User_ID': user_id, 'Student_ID': student_id, 'Name': name, 'Phone No.': phone,
-                         'Room No.': room, 'OutTime': current_time, 'InTime': None}
+                         'Room No.': room, 'OutTime': pd.to_datetime(current_time), 'InTime': None}  # Explicitly cast to datetime64
             df = pd.concat([df, pd.DataFrame([new_entry])], ignore_index=True)
 
         # Save the updated DataFrame to Excel
@@ -70,5 +69,5 @@ except KeyboardInterrupt:
     ser.close()
     print("Serial port closed.")
 except Exception as e:
-    print(f"An error occurred: {e}")
+    print(f"An error occurred:")
     ser.close()
