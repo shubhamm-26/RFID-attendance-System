@@ -69,5 +69,5 @@ except KeyboardInterrupt:
     ser.close()
     print("Serial port closed.")
 except Exception as e:
-    print(f"An error occurred: {e}")
+    print(f"An error occurred:")
     ser.close()
