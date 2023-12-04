@@ -4,7 +4,7 @@ import pandas as pd
 from datetime import datetime
 
 # Serial port settings
-ser = serial.Serial('COM2', 9600)  # Adjust COM2 to your Arduino's serial port
+ser = serial.Serial('COM9', 9600)  # Adjust COM2 to your Arduino's serial port
 
 # CSV file settings
 csv_file_path = 'data.csv'
@@ -25,18 +25,18 @@ def update_csv(user_id, current_time, student_id, name, phone, room):
             # User exists, find the last index for the given user_id
             user_index = df.index[df['User_ID'] == user_id].max()
 
-            if pd.isnull(df.at[user_index, 'OutTime']):
+            if pd.isnull(df.at[user_index, 'InTime']):
                 # OutTime is empty, update OutTime
-                df.at[user_index, 'OutTime'] = current_time
+                df.at[user_index, 'InTime'] = current_time
             else:
                 # Both InTime and OutTime are present, add a new entry
                 new_entry = {'User_ID': user_id, 'Student_ID': student_id, 'Name': name, 'Phone No.': phone,
-                             'Room No.': room, 'InTime': current_time, 'OutTime': None}
+                             'Room No.': room, 'OutTime': current_time, 'InTime': None}
                 df = pd.concat([df, pd.DataFrame([new_entry])], ignore_index=True)
         else:
             # User doesn't exist, add a new entry
             new_entry = {'User_ID': user_id, 'Student_ID': student_id, 'Name': name, 'Phone No.': phone,
-                         'Room No.': room, 'InTime': current_time, 'OutTime': None}
+                         'Room No.': room, 'OutTime': current_time, 'InTime': None}
             df = pd.concat([df, pd.DataFrame([new_entry])], ignore_index=True)
 
         # Save the updated DataFrame to CSV
